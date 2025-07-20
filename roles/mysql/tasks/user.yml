@@ -1,0 +1,16 @@
+- name: Check if root has password access
+  shell: "mysql -u root -p{{ mysql_root_password }} -e SELECT 1"
+  register: mysql_auth_check
+  ignore_errors: true
+  failed_when: false
+
+- name: Set MySQL root password using socket if no password access
+  community.mysql.mysql_user:
+    name: root
+    password: "{{ mysql_root_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    check_implicit_admin: true
+    host: localhost
+    state: present
+    update_password: on_create
+  when: mysql_auth_check.rc != 0

@@ -1,0 +1,14 @@
+- name: Apply custom MySQL config
+  template:
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart MySQL
+
+- name: Start and enable MySQL
+  service:
+    name: mysql
+    state: started
+    enabled: true

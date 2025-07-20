@@ -1,0 +1,17 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - mysql-server
+    - python3-pip
+    - python3-dev
+    - libmysqlclient-dev
+
+- name: Install PyMySQL
+  pip:
+    name: PyMySQL

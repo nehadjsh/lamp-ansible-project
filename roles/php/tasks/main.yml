@@ -1,0 +1,35 @@
+---
+# tasks file for ./php
+- name: Install PHP and extensions
+  ansible.builtin.apt:
+    name:
+      - php
+      - php-mysql
+      - libapache2-mod-php
+    state: present
+    update_cache: true
+  notify: Restart Apache    
+
+- name: Check if phpinfo.php exists
+  ansible.builtin.stat:
+    path: /var/www/html/phpinfo.php
+  register: phpinfo_file
+
+- name: Deploy phpinfo script only if not exists
+  ansible.builtin.copy:
+    src: phpinfo.php
+    dest: /var/www/html/phpinfo.php
+    mode: '0644'
+  when: not phpinfo_file.stat.exists
+
+- name: Check if test_db.php exists
+  ansible.builtin.stat:
+    path: /var/www/html/test_db.php
+  register: test_db_file
+
+- name: Deploy test DB connection script only if not exists
+  ansible.builtin.copy:
+    src: test_db.php
+    dest: /var/www/html/test_db.php
+    mode: '0644'
+  when: not test_db_file.stat.exists

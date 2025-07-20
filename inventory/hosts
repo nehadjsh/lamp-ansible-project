@@ -1,0 +1,17 @@
+[webservers]
+webserver ansible_host=<webserver-ip>
+
+[webservers:vars]
+ansible_user=web
+ansible_private_key_file=~/.ssh/id_rsa
+
+[dbservers]
+dbserver ansible_host=<dbserver-ip>
+
+[dbservers:vars]
+ansible_user=db
+ansible_private_key_file=~/.ssh/id_rsa
+
+[all:children]
+webservers
+dbservers

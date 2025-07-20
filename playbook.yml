@@ -1,0 +1,13 @@
+# ---
+# - name: LAMP Setup - Web Servers
+#   hosts: webservers
+#   become: true
+#   roles:
+#     - apache
+#     - php
+# 
+- name: LAMP Setup - DB Servers
+  hosts: dbservers
+  become: true
+  roles:
+    - mysql

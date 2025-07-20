@@ -1,0 +1,6 @@
+---
+# defaults file for ./roles/mysql/
+mysql_root_user: root
+mysql_root_password: your_secure_password
+mysql_port: 3306
+mysql_bind_address: "0.0.0.0"
